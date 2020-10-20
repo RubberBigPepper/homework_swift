@@ -6,31 +6,60 @@
 //
 
 import UIKit
+import Bond
+import ReactiveKit
 
 class TableViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet weak var removeBtn: UIButton!
+    @IBOutlet weak var addBtn: UIButton!
+    
+    private var names = MutableObservableArray(NameGenerator.generator.nextNames(20))
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+//        c) UITableView с выводом 20 разных имён людей и две кнопки. Одна кнопка добавляет новое случайное имя в начало списка, вторая — удаляет последнее имя.
+        //Список реактивно связан с UITableView.
+        names.bind(to: tableView){ (dataSource, indexPath, tableView) ->
+            UITableViewCell in
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell") as! TableViewCell
+            cell.labelName.text = dataSource[indexPath.row]
+            return cell
+        }
+        
+        removeBtn.reactive.tap
+            .observe{ _ in
+                if self.names.count>0 {
+                    self.names.remove(at: self.names.count - 1)
+                }
+            }
+        
+        addBtn.reactive.tap
+            .observe { _ in
+                self.names.insert(NameGenerator.generator.nextName(), at: 0)
+            }
+        
+        makeSearchFilter()
     }
-    
 
-    /*
-    // MARK: - Navigation
+    private func makeSearchFilter(){
+//        f) Для задачи «c» добавьте поисковую строку. При вводе текста в поисковой строке, если текст не изменялся в течение двух секунд, выполните фильтрацию
+        //имён по введённой поисковой строке (с помощью оператора throttle). Такой подход применяется в реальных приложениях при поиске, который отправляет
+        //поисковый запрос на сервер, — чтобы не перегружать сервер и поисковая строка отправлялась на сервер, только когда пользователь закончит ввод (или
+        //сделает паузу во вводе).
+        
+        //1 не понятно, почему throttle, а не debounce использовать
+        //2 не понятно вообще как фильтровать
+        
+        searchTextField.reactive.text
+            .ignoreNils()
+            .debounce(for: 2.0)
+            .filter{ $0.count > 0}
+        //.observeNext{ print("Вот тут надо фильтрование сделать") }
+    }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    @IBAction func addPressed(_ sender: Any) {
-    }
-    @IBAction func removePressed(_ sender: Any) {
-    }
     
 }

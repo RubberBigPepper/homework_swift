@@ -26,7 +26,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3LF-9T-7i3">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3LF-9T-7i3">
                                 <rect key="frame" x="20" y="128" width="374" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -41,7 +41,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SkC-Nk-mUb">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SkC-Nk-mUb">
                                 <rect key="frame" x="20" y="299" width="297" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -50,26 +50,17 @@
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="500" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xmt-fu-fRo">
                                 <rect key="frame" x="325" y="295" width="69" height="30"/>
                                 <state key="normal" title="Increment"/>
-                                <connections>
-                                    <action selector="inscrementPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="76M-kY-S9E"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lk3-Wd-KsX">
-                                <rect key="frame" x="20" y="433" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="btnFirstPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zv3-vH-Ozu"/>
-                                </connections>
+                                <rect key="frame" x="20" y="433" width="35" height="30"/>
+                                <state key="normal" title="Пуск"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mHw-0v-uEQ">
-                                <rect key="frame" x="348" y="433" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="btnSecondPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NIm-QA-WGU"/>
-                                </connections>
+                                <rect key="frame" x="359" y="433" width="35" height="30"/>
+                                <state key="normal" title="Пуск"/>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kog-Kc-lYZ">
-                                <rect key="frame" x="74" y="437" width="266" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kog-Kc-lYZ">
+                                <rect key="frame" x="63" y="437" width="288" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -110,12 +101,15 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Простые задания" id="Mdx-Zx-Fxg"/>
                     <connections>
+                        <outlet property="firstBtn" destination="lk3-Wd-KsX" id="oaW-lE-g55"/>
+                        <outlet property="incrementBtn" destination="Xmt-fu-fRo" id="oZv-hE-LNh"/>
                         <outlet property="incrementLabel" destination="SkC-Nk-mUb" id="aEO-Ig-tcW"/>
                         <outlet property="labelRocket" destination="kog-Kc-lYZ" id="zha-pi-PQ7"/>
                         <outlet property="loginTextField" destination="mHs-so-O4O" id="jZP-SZ-iZp"/>
                         <outlet property="passwordTextField" destination="Cla-lN-86Q" id="IBz-HY-qhJ"/>
                         <outlet property="resultLabel" destination="3LF-9T-7i3" id="RxZ-XW-htG"/>
                         <outlet property="searchTextField" destination="WkL-3l-1MM" id="J4Y-Pj-iPC"/>
+                        <outlet property="secondBtn" destination="mHw-0v-uEQ" id="y5f-dJ-GJh"/>
                         <outlet property="sendBtn" destination="iLg-s2-gsR" id="E8b-mv-s50"/>
                     </connections>
                 </viewController>
@@ -139,22 +133,16 @@
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ewz-Q6-PIg">
                                 <rect key="frame" x="20" y="783" width="189" height="30"/>
                                 <state key="normal" title="Добавить имя"/>
-                                <connections>
-                                    <action selector="addPressed:" destination="9ff-bQ-4kQ" eventType="touchUpInside" id="t2O-WN-1qo"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qPX-63-s5R">
                                 <rect key="frame" x="217" y="783" width="177" height="30"/>
                                 <state key="normal" title="Удалить последнее"/>
-                                <connections>
-                                    <action selector="removePressed:" destination="9ff-bQ-4kQ" eventType="touchUpInside" id="wSN-KQ-a6W"/>
-                                </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tty-bE-CvI">
                                 <rect key="frame" x="20" y="86" width="374" height="689"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="wfX-1l-zlE">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TableViewCell" id="wfX-1l-zlE" customClass="TableViewCell" customModule="HomeWork2_3" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="374" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wfX-1l-zlE" id="1Sm-4j-iDH">
@@ -175,6 +163,9 @@
                                                 <constraint firstItem="D1d-mJ-aJb" firstAttribute="trailing" secondItem="1Sm-4j-iDH" secondAttribute="trailingMargin" id="xVU-7J-L1p"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="labelName" destination="D1d-mJ-aJb" id="ru4-gz-zqK"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -198,6 +189,8 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Задания с UITableView" id="6dy-tM-1d4"/>
                     <connections>
+                        <outlet property="addBtn" destination="ewz-Q6-PIg" id="l74-Ks-NVA"/>
+                        <outlet property="removeBtn" destination="qPX-63-s5R" id="ysV-Eq-qAa"/>
                         <outlet property="searchTextField" destination="fYJ-hm-lt4" id="iUH-qg-7BK"/>
                         <outlet property="tableView" destination="tty-bE-CvI" id="U3q-nw-ipx"/>
                     </connections>
