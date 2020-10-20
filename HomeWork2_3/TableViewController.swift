@@ -17,16 +17,20 @@ class TableViewController: UIViewController {
     @IBOutlet weak var addBtn: UIButton!
     
     private var names = MutableObservableArray(NameGenerator.generator.nextNames(20))
-    
+    private var search = "" //маска поиска
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
 
 //        c) UITableView с выводом 20 разных имён людей и две кнопки. Одна кнопка добавляет новое случайное имя в начало списка, вторая — удаляет последнее имя.
         //Список реактивно связан с UITableView.
-        names.bind(to: tableView){ (dataSource, indexPath, tableView) ->
+        names
+            .bind(to: tableView){ (dataSource, indexPath, tableView) ->
             UITableViewCell in
             let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell") as! TableViewCell
-            cell.labelName.text = dataSource[indexPath.row]
+            let text = dataSource[indexPath.row]
+            cell.labelName.text = text
+            cell.isHidden = self.search.count>0 && text.lowercased().range(of: self.search) == nil
             return cell
         }
         
@@ -58,7 +62,7 @@ class TableViewController: UIViewController {
             .ignoreNils()
             .debounce(for: 2.0)
             .filter{ $0.count > 0}
-        //.observeNext{ print("Вот тут надо фильтрование сделать") }
+            .observeNext{ self.search = $0.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) }
     }
 
     
