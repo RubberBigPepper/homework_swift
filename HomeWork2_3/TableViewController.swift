@@ -17,22 +17,32 @@ class TableViewController: UIViewController {
     @IBOutlet weak var addBtn: UIButton!
     
     private var names = MutableObservableArray(NameGenerator.generator.nextNames(20))
-    private var search = "" //маска поиска
+    private var search = Property("") //маска поиска
  
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        c) UITableView с выводом 20 разных имён людей и две кнопки. Одна кнопка добавляет новое случайное имя в начало списка, вторая — удаляет последнее имя.
-        //Список реактивно связан с UITableView.
+        //        c) UITableView с выводом 20 разных имён людей и две кнопки. Одна кнопка добавляет новое случайное имя в начало списка, вторая — удаляет последнее имя.
+                //Список реактивно связан с UITableView.
+        search //по другому связять маску фильтрации и список не удалось, это немного костыль, но знаний не хватает как сделать лучше
+            .observeNext{_ in //интересно, почему тут не дает вставить [unowned self]
+                self.names.batchUpdate { _ in //костыль тут - тупо говорим списку обновится
+                }
+            }
+            .dispose(in: reactive.bag)
+        
         names
+            .filterCollection{ [unowned self] in //ну и сама фильтрация списка по маске, если маска пустая - пропускаем все элементы
+                return !(self.search.value.count>0 && $0.lowercased().range(of: self.search.value) == nil)
+            }
             .bind(to: tableView){ (dataSource, indexPath, tableView) ->
-            UITableViewCell in
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell") as! TableViewCell
-            let text = dataSource[indexPath.row]
-            cell.labelName.text = text
-            //cell.isHidden = self.search.count>0 && text.lowercased().range(of: self.search) == nil //это костыль естественно.
-            return cell
-        }
+                UITableViewCell in
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell") as! TableViewCell
+                let text = dataSource[indexPath.row]
+                cell.labelName.text = text
+                return cell
+            }
+            .dispose(in: reactive.bag)
         
         removeBtn.reactive.tap
             .observeNext{ [unowned self] in
@@ -66,11 +76,11 @@ class TableViewController: UIViewController {
         //2 не понятно вообще как фильтровать
         
         searchTextField.reactive.text
-            .ignoreNils()
-            .debounce(for: 2.0)
-            .filter{ $0.count > 0}
-            .observeNext{ [unowned self] in
-                self.search = $0.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) }
+            .debounce(for: 2.0)//мне кажется лучше debounce
+            .map{//правим маску фильтрации
+                $0 != nil ? $0!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines): ""
+            }
+            .bind(to: search)//передаем свойству
             .dispose(in: reactive.bag)
     }
 

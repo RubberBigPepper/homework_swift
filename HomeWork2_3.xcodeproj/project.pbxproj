@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5002A9E52540A52C006F1623 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002A9E42540A52C006F1623 /* Utils.swift */; };
 		5021A3B1253DF9EE000408DA /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021A3B0253DF9EE000408DA /* TableViewController.swift */; };
 		503D3849253F0518002B1914 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503D3848253F0518002B1914 /* TableViewCell.swift */; };
 		503D384C253F06E5002B1914 /* NameGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503D384B253F06E5002B1914 /* NameGenerator.swift */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		46BB30F972D1D831A5B2A2A4 /* Pods_HomeWork2_3.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HomeWork2_3.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5002A9E42540A52C006F1623 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		5021A3B0253DF9EE000408DA /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		503D3848253F0518002B1914 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		503D384B253F06E5002B1914 /* NameGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameGenerator.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				5021A3B0253DF9EE000408DA /* TableViewController.swift */,
 				503D3848253F0518002B1914 /* TableViewCell.swift */,
 				503D384B253F06E5002B1914 /* NameGenerator.swift */,
+				5002A9E42540A52C006F1623 /* Utils.swift */,
 			);
 			path = HomeWork2_3;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 				503D384C253F06E5002B1914 /* NameGenerator.swift in Sources */,
 				503D3849253F0518002B1914 /* TableViewCell.swift in Sources */,
 				5068F8F3253D670000F4D154 /* ViewController.swift in Sources */,
+				5002A9E52540A52C006F1623 /* Utils.swift in Sources */,
 				5068F8EF253D670000F4D154 /* AppDelegate.swift in Sources */,
 				5068F8F1253D670000F4D154 /* SceneDelegate.swift in Sources */,
 				5021A3B1253DF9EE000408DA /* TableViewController.swift in Sources */,

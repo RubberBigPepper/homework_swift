@@ -39,12 +39,6 @@ class ViewController: UIViewController {
         reactive.bag.dispose()
     }
     
-    private func isEmailCorrect(_ email:String)->Bool{//проверка корректности почты
-        let emailFormat = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailFormat)
-        return emailPredicate.evaluate(with: email)
-    }
-    
     private func makePasswordLogin(){
 //   В лейбл выводится «некорректная почта», если введённая почта некорректна.
 //    Если почта корректна, но пароль меньше шести символов, выводится: «Слишком короткий пароль».
@@ -52,14 +46,14 @@ class ViewController: UIViewController {
 //        пароль не менее шести символов.
                 
         combineLatest(loginTextField.reactive.text.ignoreNils(), passwordTextField.reactive.text.ignoreNils())
-            { email, pass in //тут скорее всего утечка
-                return self.isEmailCorrect(email) ? (pass.count<6 ? "Слишком короткий пароль" : "") : "Некорректная почта"
+            { email, pass in //со статичной функцией (ее стоит вынести в файл утилит) не будет утечки
+                return Utils.isEmailCorrect(email) ? (pass.count<6 ? "Слишком короткий пароль" : "") : "Некорректная почта"
             }
             .bind(to: resultLabel.reactive.text)
         
         combineLatest(loginTextField.reactive.text.ignoreNils(), passwordTextField.reactive.text.ignoreNils())
-            { email, pass in //тут скорее всего утечка
-                return self.isEmailCorrect(email) && pass.count > 5
+            { email, pass in //со статичной функцией (ее стоит вынести в файл утилит) не будет утечки
+                return Utils.isEmailCorrect(email) && pass.count > 5
             }
             .bind(to: sendBtn.reactive.isEnabled)
             .dispose(in: reactive.bag)
