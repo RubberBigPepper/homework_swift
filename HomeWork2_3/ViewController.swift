@@ -34,6 +34,11 @@ class ViewController: UIViewController {
         makeDelayedSearch()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        reactive.bag.dispose()
+    }
+    
     private func isEmailCorrect(_ email:String)->Bool{//проверка корректности почты
         let emailFormat = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailFormat)
@@ -47,31 +52,41 @@ class ViewController: UIViewController {
 //        пароль не менее шести символов.
                 
         combineLatest(loginTextField.reactive.text.ignoreNils(), passwordTextField.reactive.text.ignoreNils())
-            { email, pass in
+            { email, pass in //тут скорее всего утечка
                 return self.isEmailCorrect(email) ? (pass.count<6 ? "Слишком короткий пароль" : "") : "Некорректная почта"
             }
             .bind(to: resultLabel.reactive.text)
         
         combineLatest(loginTextField.reactive.text.ignoreNils(), passwordTextField.reactive.text.ignoreNils())
-            { email, pass in
+            { email, pass in //тут скорее всего утечка
                 return self.isEmailCorrect(email) && pass.count > 5
             }
-          .bind(to: sendBtn.reactive.isEnabled)
+            .bind(to: sendBtn.reactive.isEnabled)
+            .dispose(in: reactive.bag)
     }
     
     private func makeIncrementBtn(){
 //        Лейбл и кнопку. В лейбле выводится значение counter (по умолчанию 0), при нажатии counter увеличивается на 1.
         incrementBtn.reactive.tap
-            .observeNext{ self.incrementValue.value = self.incrementValue.value + 1
+            .observeNext{ [unowned self] in
+                self.incrementValue.value = self.incrementValue.value + 1
             }
-        incrementValue.map{ _ in String (self.incrementValue.value) }
+            .dispose(in: reactive.bag)
+        incrementValue.map{ String ($0) }
             .bind(to: incrementLabel.reactive.text)
     }
     
     private func makeCombindedBtn(){
 //        e) Две кнопки и лейбл. Когда на каждую кнопку нажали хотя бы один раз, в лейбл выводится: «Ракета запущена».
         combineLatest(firstBtn.reactive.tap, secondBtn.reactive.tap)
-            .observe{ _ in self.labelRocket.text = "Ракета запущена" }
+            .map{_ in //так избежим утечки памяти
+                return "Ракета запущена"
+            }
+            .bind(to: labelRocket.reactive.text)
+/*            .observe{ _ in //интересно, а как тут избежать утечки?
+                self.labelRocket.text = "Ракета запущена"
+            }
+            .dispose(in: reactive.bag)*/
     }
     
     private func makeDelayedSearch(){

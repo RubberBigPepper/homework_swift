@@ -30,23 +30,30 @@ class TableViewController: UIViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell") as! TableViewCell
             let text = dataSource[indexPath.row]
             cell.labelName.text = text
-            cell.isHidden = self.search.count>0 && text.lowercased().range(of: self.search) == nil
+            //cell.isHidden = self.search.count>0 && text.lowercased().range(of: self.search) == nil //это костыль естественно.
             return cell
         }
         
         removeBtn.reactive.tap
-            .observe{ _ in
+            .observeNext{ [unowned self] in
                 if self.names.count>0 {
                     self.names.remove(at: self.names.count - 1)
                 }
             }
+            .dispose(in: reactive.bag)
         
         addBtn.reactive.tap
-            .observe { _ in
+            .observeNext {[unowned self] in
                 self.names.insert(NameGenerator.generator.nextName(), at: 0)
             }
+            .dispose(in: reactive.bag)
         
         makeSearchFilter()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        reactive.bag.dispose()
     }
 
     private func makeSearchFilter(){
@@ -62,7 +69,9 @@ class TableViewController: UIViewController {
             .ignoreNils()
             .debounce(for: 2.0)
             .filter{ $0.count > 0}
-            .observeNext{ self.search = $0.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) }
+            .observeNext{ [unowned self] in
+                self.search = $0.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) }
+            .dispose(in: reactive.bag)
     }
 
     
