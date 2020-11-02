@@ -16,7 +16,8 @@ class TableViewController: UIViewController {
     @IBOutlet weak var removeBtn: UIButton!
     @IBOutlet weak var addBtn: UIButton!
     
-    private var names = MutableObservableArray(NameGenerator.generator.nextNames(20))
+    private var names = MutableObservableArray(NameGenerator.generator.nextNames(20))//тут будут все элементы без фильтрации
+    private var namesFiltered = MutableObservableArray<String>() //тут будут отфильтрованные элементы
     private var search = Property("") //маска поиска
  
     override func viewDidLoad() {
@@ -35,6 +36,9 @@ class TableViewController: UIViewController {
             .filterCollection{ [unowned self] in //ну и сама фильтрация списка по маске, если маска пустая - пропускаем все элементы
                 return !(self.search.value.count>0 && $0.lowercased().range(of: self.search.value) == nil)
             }
+            .bind(to: namesFiltered)
+        
+        namesFiltered
             .bind(to: tableView){ (dataSource, indexPath, tableView) ->
                 UITableViewCell in
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell") as! TableViewCell
